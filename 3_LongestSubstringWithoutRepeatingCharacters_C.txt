@@ -1,0 +1,32 @@
+
+
+int lengthOfLongestSubstring(char * s){
+    //Use hasmap to record the scanning of the string
+    //According to ASCII table, all characters are within value 128
+    int map[128];
+    int index = 0, left_pos = -1, max_length = 0,  current_length = 0;
+    
+    memset(map, -1, sizeof(map));
+    
+    while(*s != '\0'){
+        //If the s is not a end character, do the following
+        //Before record the index, get the left_pos
+        if(map[*s] > left_pos){
+            left_pos = map[*s];
+        }
+        
+        //Record down the search index to map according to its value
+        map[*s] = index;
+        
+        //Calculate the current max substring length
+        current_length = index - left_pos;
+        if(current_length > max_length){
+            max_length = current_length;
+        }
+        
+        index++;
+        s++;
+    }
+    
+    return max_length;
+}
