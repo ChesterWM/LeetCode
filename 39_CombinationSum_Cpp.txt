@@ -1,0 +1,28 @@
+class Solution {
+public:
+    void combination(int i, vector<int> &candidates, int target, vector<vector<int>> &ans, vector<int> &temp_ans){
+        if(i >= candidates.size()){ //reach the end of the candidate
+            if(target == 0){
+                ans.push_back(temp_ans);    //valid combination
+            }
+            return;
+        }
+        if(candidates[i] <= target){
+            //try to put the candidates in temp_ans and check
+            temp_ans.push_back(candidates[i]);
+            combination(i, candidates, target-candidates[i], ans, temp_ans);
+            //In combination, if the combination is correct, it will store in ans vector, then pop the last and try the next candidates
+            //If incorrect, then pop the last and try the next candidates
+            //Both need to pop the last and try the next candidates
+            temp_ans.pop_back();
+        }
+        combination(i + 1, candidates, target, ans, temp_ans);
+    }
+    
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<int> temp_ans;
+        vector<vector<int>> ans;
+        combination(0, candidates, target, ans, temp_ans);
+        return ans;
+    }
+};

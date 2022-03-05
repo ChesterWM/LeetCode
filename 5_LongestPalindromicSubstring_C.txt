@@ -1,0 +1,51 @@
+
+int getPaliLength(int left, int right, char *s, int string_len){
+    int len = 0;
+    
+    if(s == NULL){
+        return 0;
+    }
+    
+    while(left >= 0 && right < string_len){
+        if(s[left] == s[right]){
+            len = right - left + 1;
+            left--;
+            right++;
+        } else {
+            break;
+        }
+    }
+    return len;
+}
+
+char * longestPalindrome(char * s){
+    int len = 0, i = 0;
+    int odd_palidromic_len = 0, even_palidromic_len = 0;
+    int palidromic_end = 0, palidromic_start = 0;
+    int result_len = 0;
+    
+    //Get the string len
+    while(s[len]){
+        len++;
+    }
+    
+    for(i = 0; i < len; i++){
+        odd_palidromic_len = getPaliLength(i, i, s, len);
+        even_palidromic_len = getPaliLength(i, i+1, s, len);
+        
+        //Check both odd and even palidromic len respectively
+        if(odd_palidromic_len > (palidromic_end - palidromic_start)){
+            palidromic_start = i - odd_palidromic_len/2;
+            palidromic_end = i + odd_palidromic_len/2;
+        }
+        if(even_palidromic_len > (palidromic_end - palidromic_start)){
+            palidromic_start = i + 1 - even_palidromic_len/2;
+            palidromic_end = i + even_palidromic_len/2;
+        }
+    }
+    
+    result_len = palidromic_end - palidromic_start + 1;
+    s[palidromic_end + 1] = '\0';
+    return &s[palidromic_start];
+    
+}

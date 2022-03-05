@@ -1,0 +1,63 @@
+
+
+char * convert(char * s, int numRows){
+    int len = 0, i = 0, j = 0, pos = 0, idx1 = 0, idx2 = 0;
+    int char_in_col = 0, num_col = 0;
+    char *p = NULL; //character pointer
+    char *retval = NULL;
+    
+    //Get the string len
+    while(s[len]){
+        len++;
+    }
+    
+    //Prepare the retval
+    retval = (char*)malloc(len+1);
+    memset(retval, 0, len+1);
+    
+    //Cater the numRows == 1
+    if(numRows == 1){
+        return s;
+    }
+    
+    //Divide the string into colume according to numRows
+    char_in_col = numRows + (numRows - 2);
+    
+    //Find the number of colume
+    if(len % char_in_col == 0){
+        num_col = len / char_in_col;
+    } else {
+        num_col = (len / char_in_col) + 1;
+    }
+    
+    for(i = 0; i < ((char_in_col/2)+1); i++){
+        for(j = 0; j < num_col; j++){
+            //p = s + (j * char_in_col);  //Shift the string address
+            idx1 = j * char_in_col + i;
+            idx2 = j * char_in_col + (char_in_col - i);
+            if(i == 0 || i == (char_in_col/2)){
+                //if(p[i] != '\0'){
+                //    retval[pos++] = p[i];
+                //}
+                if(idx1 < len){
+                    retval[pos++] = s[idx1];
+                }
+            } else {
+                //if(p[i] != '\0'){
+                //    retval[pos++] = p[i];
+                //}
+                //if(p[char_in_col - i] != '\0'){
+                //    retval[pos++] = p[char_in_col - i];
+                //}
+                if(idx1 < len){
+                    retval[pos++] = s[idx1];
+                }
+                if(idx2 < len){
+                    retval[pos++] = s[idx2];
+                }
+            }
+        }
+    }
+    retval[len] = '\0';
+    return retval;
+}
