@@ -1,0 +1,35 @@
+class Solution {
+public:
+    void combination(int index, vector<int> &candidates, int target, vector<int> &answer, vector<vector<int>> &result){
+        if(index >= candidates.size()){
+            if(target == 0){
+                result.push_back(answer);
+            }
+            return;
+        }
+        
+        if(candidates[index] <= target){
+            answer.push_back(candidates[index]);
+            combination(index + 1, candidates, target-candidates[index], answer, result);
+            answer.pop_back();
+        }
+        while(index < candidates.size() - 1){
+            if(candidates[index] == candidates[index + 1]){
+                index++;
+            } else {
+                break;
+            }
+        }
+        combination(index + 1, candidates, target, answer, result);
+    }
+    
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        vector<int> answer;
+        vector<vector<int>> result;
+        
+        sort(candidates.begin(),  candidates.end());
+        
+        combination(0, candidates, target, answer, result);
+        return result;
+    }
+};
