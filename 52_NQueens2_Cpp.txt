@@ -1,0 +1,79 @@
+class Solution {
+public:
+    void init_board(vector<string> &board, int n){
+        int i = 0;
+        
+        board.resize(n);
+        for(i = 0; i < n; i++){
+            board[i] = string(n, '.');
+        }
+    }
+    
+    bool is_valid_grid(int row, int col, int board_size){
+        if(row < board_size && col < board_size && row >= 0 && col >= 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    bool is_good_placement(int row, int col, vector<string> &board){
+        int i = 0;
+        int r = 0, c = 0;
+        int board_size = board.size();
+        
+        for(i = 0; i < row; i++){
+            if(board[i][col] == 'Q'){
+                return false;
+            }
+        }
+        
+        //Check if any queen exist in top right and top left hand diagonal
+        r = row;
+        c = col;
+        while(is_valid_grid(--r, --c, board_size)){
+            if(board[r][c] == 'Q'){
+                return false;
+            }
+        }
+        
+        r = row;
+        c = col;
+        while(is_valid_grid(--r, ++c, board_size)){
+            if(board[r][c] == 'Q'){
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    void solver_backtracking(int row, vector<vector<string>> &result, vector<string> &board){
+        int col = 0;
+        int board_size = board.size();
+        
+        if(row >= board_size){
+            //found a solution
+            result.push_back(board);
+            return;
+        }
+        
+        for(col = 0; col < board_size; col++){
+            if(is_good_placement(row, col, board)){
+                board[row][col] = 'Q';
+                solver_backtracking(row + 1, result, board);
+                board[row][col] = '.';
+            }
+        }
+    }
+    
+    int totalNQueens(int n) {
+        vector<string> board;
+        vector<vector<string>> result;
+        
+        init_board(board, n);
+        
+        solver_backtracking(0, result, board);
+        return result.size();
+    }
+};
