@@ -1,0 +1,24 @@
+class Solution {
+public:
+    void solver(int open, int close, int n, string answer, vector<string> &result){
+        if(answer.size() == n*2){
+            result.push_back(answer);
+            return;
+        }
+        
+        if(open < n){
+            solver(open+1, close, n, answer+'(', result);
+        }
+        if(close < open){
+            solver(open, close+1, n, answer+')', result);
+        }
+    }
+    
+    vector<string> generateParenthesis(int n) {
+        string answer;
+        vector<string> result;
+        
+        solver(0, 0, n, answer, result);
+        return result;
+    }
+};
