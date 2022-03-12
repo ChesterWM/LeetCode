@@ -1,0 +1,28 @@
+class Solution {
+public:
+    void solver(int index, string &digits, string &answer, vector<string> &str, vector<string> &result){
+        if(answer.size() >= digits.size()){
+            result.push_back(answer);
+            return;
+        }
+        
+        string temp = str[digits[index] - 0x30];
+        for(char ch : temp){
+            answer.push_back(ch);
+            solver(index+1, digits, answer, str, result);
+            answer.pop_back();
+        }
+    }
+    
+    vector<string> letterCombinations(string digits) {
+        vector<string> str = {"", "", "abc", "edf", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        vector<string> result;
+        string answer = "";
+        
+        if(digits.size()){
+            solver(0, digits, answer, str, result);
+        }
+        
+        return result;
+    }
+};
