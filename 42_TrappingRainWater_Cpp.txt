@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int lmax = 0, rmax = 0;
+        int l = 0, r = 0;
+        int result = 0;
+
+        l = 0;
+        r = height.size()-1;
+        
+        lmax = height[l];
+        rmax = height[r];
+        
+        while(l <= r){
+            if(lmax <= rmax){
+                //Consider the left side
+                if(height[l] < lmax){
+                    result += lmax - height[l];
+                } else {
+                    lmax = height[l];
+                }
+                l++;
+            } else {
+                //Consider the right side
+                if(height[r] < rmax){
+                    result += rmax - height[r];
+                } else {
+                    rmax = height[r];
+                }
+                r--;
+            }
+        }
+        
+        return result;
+    }
+};
