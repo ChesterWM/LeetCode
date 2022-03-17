@@ -1,0 +1,24 @@
+class Solution {
+public:
+    void solver(int index, vector<int> &nums, vector<vector<int>> &result){
+        if(index >= nums.size()){
+            result.push_back(nums);
+            return;
+        }
+        
+        for(int i = index; i < nums.size(); i++){
+            swap(nums[index], nums[i]); //using swap to look for all possible permutation, part of algorithm
+            solver(index+1, nums, result);  //backtracking
+            swap(nums[index], nums[i]); 
+        }
+        
+    }
+    
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> result;
+        
+        solver(0, nums, result);
+        
+        return result;
+    }
+};
