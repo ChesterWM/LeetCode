@@ -1,0 +1,47 @@
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        int m = 0, n = 0, i = 0, loop = 0;
+        int totalSize = 0;
+        vector<int> answer;
+        
+        m = matrix[0].size();
+        n = matrix.size();
+        totalSize = m * n;
+        
+        while(answer.size() < totalSize){
+            //top row, left to right
+            if(answer.size() < totalSize){
+                for(i = loop; i < (m-loop); i++){
+                    answer.push_back(matrix[loop][i]);
+                }
+            }
+            
+            
+            //rightmost colume
+            if(answer.size() < totalSize){
+                for(i = (loop+1); i < (n-loop); i++){
+                    answer.push_back(matrix[i][m-loop-1]);
+                }
+            }
+            
+            //bottom row, right to left
+            if(answer.size() < totalSize){
+                for(i = (m-loop-2); i >= loop; i--){
+                    answer.push_back(matrix[n-1-loop][i]);
+                }
+            }
+            
+            //leftmost colume
+            if(answer.size() < totalSize){
+                for(i = (n-loop-2); i >= (loop+1); i--){
+                    answer.push_back(matrix[i][loop]);
+                }
+            }
+            
+            loop++;
+        }
+        
+        return answer;
+    }
+};

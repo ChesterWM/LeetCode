@@ -1,0 +1,27 @@
+class Solution {
+public:    
+    bool canJump(vector<int>& nums) {
+        int i = 0, ptr = 0;
+        vector<int> maxLen(nums.size()-1);
+        
+        if(nums.size() == 0){
+            return false;
+        } else if(nums.size() == 1){
+            return true;
+        }
+        
+        for(i = 0; i < nums.size()-1; i++){
+            if(i > ptr){
+                return false;
+            }
+            maxLen[i] = nums[i] + i;
+            if(maxLen[i] >= nums.size()-1){
+                return true;
+            }
+            
+            ptr = max(ptr, maxLen[i]);
+        }
+        
+        return false;
+    }
+};
