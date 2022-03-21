@@ -1,0 +1,42 @@
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int n) {
+        vector<vector<int>> ans(n, vector<int>(n, 0));
+        int i = 0, loop = 0, index = 0, totalSize = 0;
+        
+        totalSize = n*n;
+        
+        while(index < totalSize){
+            //top row, left to right
+            if(index < totalSize){
+                for(i = loop; i < (n-loop); i++){
+                    ans[loop][i] = ++index;
+                }
+            }
+            
+            //rightmost colume
+            if(index < totalSize){
+                for(i = (loop+1); i < (n-loop); i++){
+                    ans[i][n-loop-1] = ++index;
+                }
+            }
+            
+            //bottom row, right to left
+            if(index < totalSize){
+                for(i = (n-loop-2); i >= loop; i--){
+                    ans[n-1-loop][i] = ++index;
+                }
+            }
+            
+            //leftmost colume
+            if(index < totalSize){
+                for(i = (n-loop-2); i >= (loop+1); i--){
+                    ans[i][loop] = ++index;
+                }
+            }
+            
+            loop++;
+        }
+        return ans;
+    }
+};

@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        vector<vector<int>> ans;
+        int i = 0;
+        
+        //Sort the interval in ascending order
+        sort(intervals.begin(), intervals.end());	//vector<int> can use sort!
+        
+        //loop through the intervals
+        for(i = 0; i < intervals.size(); i++){
+            if(ans.empty()){
+                //push intervals[x] to ans if ans is empty(should only put the first interval value)
+                ans.push_back(intervals[i]);
+            } else {
+                //Get the last interval value in answer
+                vector<int> &temp = ans.back();
+                
+                if(temp[1] >= intervals[i][0]){
+                    //overlapping case
+                    temp[1] = max(temp[1], intervals[i][1]);
+                } else {
+                    //no overlap cases
+                    ans.push_back(intervals[i]);
+                }
+            }
+        }
+        
+        return ans;
+    }
+};
