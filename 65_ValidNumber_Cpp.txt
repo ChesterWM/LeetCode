@@ -1,0 +1,114 @@
+class Solution {
+public:
+    bool isDecimal(string s){
+        bool is_digit = false;
+        bool is_dot = false;
+        
+        if(s.length() == 0){
+            return false;
+        }
+        
+        for(auto ch : s){
+            switch(ch){
+                case '+':
+                case '-':
+                    if(is_digit || is_dot){
+                        return false;
+                    }
+                    break;
+                case '.':
+                    if(!is_dot){
+                        is_dot = true;
+                    } else {
+                        //2 or more '.' exist!
+                        return false;
+                    }
+                    break;
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                    is_digit = true;
+                    break;
+                default:
+                    return false;
+            }
+        }
+        if(!is_digit){
+            return false;
+        }
+        return true;
+    }
+    
+    bool isInteger(string s){
+        bool is_digit = false;
+        
+        if(s.length() == 0){
+            return false;
+        }
+        
+        for(auto ch : s){
+            switch(ch){
+                case '+':
+                case '-':
+                    if(is_digit){
+                        return false;
+                    }
+                    break;
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                    is_digit = true;
+                    break;
+                default:
+                    return false;
+            }
+        }
+        if(!is_digit){
+            return false;
+        }
+        return true;
+    }
+    
+    bool isNumber(string s) {
+        string s1 = "";
+        string s2 = "";
+        bool exponential = false;
+        
+        for(int i = 0; i < s.length(); i++){
+            if(s[i] == 'E' || s[i] == 'e'){
+                if(exponential){
+                    return false;
+                }
+                exponential = true;
+            } else {
+                if(!exponential){
+                    s1 += s[i];
+                } else {
+                    s2 += s[i];
+                }
+            }
+        }
+        
+        if(exponential){
+            return ((isDecimal(s1) || isInteger(s1)) && isInteger(s2));
+        } else {
+            return isDecimal(s1) || isInteger(s1);
+        }
+        
+        return false;
+    }
+};
