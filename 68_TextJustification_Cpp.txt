@@ -1,0 +1,86 @@
+class Solution {
+public:
+    void packLine(vector<string> &ans, vector<string> &words, int maxWidth, bool last){
+        int wordCount = words.size();
+        int wordWidth = 0, extra_space = 0;
+        int i = 0, space_idx = 0;;
+        string strLine = "";
+        
+        vector<int> space(wordCount-1, 1);  //declare a vector to store number of space between words
+        
+        //Get the widthCount
+        for(int i = 0; i < words.size(); i++){
+            wordWidth += words[i].length();
+        }
+        
+        //Handle the extra space
+        if(wordCount > 1){
+            if(!last){
+                //Not the last line, handle the justification
+                extra_space = maxWidth - (wordWidth + wordCount - 1);
+                space_idx = 0;
+                while(extra_space){
+                    space[space_idx]++;
+                    space_idx++;
+                    if(space_idx >= space.size()){
+                        space_idx = 0;
+                    }
+                    extra_space--;
+                }
+            }
+        } else {
+            space.push_back(maxWidth-words[0].length());
+        }
+        
+        //Pack the answer
+        for(i = 0; i < words.size(); i++){
+            strLine += words[i];
+            if(i < space.size()){
+                for(int j = 0; j < space[i]; j++){
+                    strLine += " ";
+                }
+            }
+        }
+        if(last){
+            //Check if strLine = maxWidth
+            while(strLine.length() < maxWidth){
+                strLine += " ";
+            }
+        }
+        ans.push_back(strLine);
+    }
+    
+    vector<string> fullJustify(vector<string>& words, int maxWidth) {
+        vector<string> temp;
+        vector<string> ans;
+        int wordCount = 0;
+        int widthCount = 0;
+        int i = 0;
+        
+        wordCount = words.size();
+        while(i < wordCount){
+            widthCount += words[i].length();
+            
+            if(widthCount >= maxWidth - 1){
+                //Can't take the last word
+                if(widthCount == maxWidth || widthCount == maxWidth-1){
+                    temp.push_back(words[i]);
+                    i++;
+                }
+                packLine(ans, temp, maxWidth, false);
+                temp.clear();
+                widthCount = 0;
+            } else {
+                temp.push_back(words[i]);
+                widthCount++;   //space
+                i++;
+            }
+        }
+        
+        if(!temp.empty()){
+            packLine(ans, temp, maxWidth, true);
+        }
+        
+        return ans;
+    }
+};
