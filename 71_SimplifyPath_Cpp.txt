@@ -1,0 +1,82 @@
+class Solution {
+public:
+    string simplifyPath(string path) {
+        stringstream ss(path);
+        string ans, temp;
+        vector<string> str;
+        
+        
+        while(getline(ss, temp, '/')){
+            if(temp == "" || temp == "."){
+                continue;
+            } else {
+                if(temp == ".."){
+                    if(!str.empty()){
+                        str.pop_back();
+                    }
+                } else{
+                    str.push_back(temp);
+                }
+            }
+        }
+        
+        //Handle and pack the answer
+        for(auto directory : str){
+            ans += ('/' + directory);
+        }
+        
+        if(ans == ""){
+            ans += '/';
+        }
+        
+        return ans;
+    }
+};
+
+
+//Raw solution, slow!!!!
+class Solution {
+public:
+    string simplifyPath(string path) {
+        stack<string> str;
+        string ans;
+        
+        for(int i = 0; i < path.size(); i++){
+            if(path[i] == '/'){
+                continue;
+            }
+            
+            string temp;
+            //Get the content of the path
+            while(i < path.size() && path[i] != '/'){
+                //push all the content to str stack
+                temp += path[i];
+                i++;
+            }
+            
+            //check temp
+            if(temp == "."){
+                continue;
+            }
+            if(temp == ".."){
+                //pop the str stack if str stack is not empty
+                if(!str.empty()){
+                    str.pop();
+                }
+            } else {
+                str.push(temp);
+            }
+        }
+        
+        while(!str.empty()){
+            ans = ('/' + str.top() + ans);
+            str.pop();
+        }
+        
+        if(ans.length() == 0){
+            ans += '/';
+        }
+        
+        return ans;
+    }
+};
