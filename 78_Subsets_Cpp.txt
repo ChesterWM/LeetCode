@@ -1,0 +1,37 @@
+class Solution {
+public:
+    void solver(int index, int size, vector<int> &nums, vector<int> &ans, vector<vector<int>> &result){
+        int i = 0;
+        
+        if(ans.size() >= size){
+            result.push_back(ans);
+            return;
+        }
+        
+        if(index < nums.size()){
+            for(i = index; i < nums.size(); i++){
+                ans.push_back(nums[i]);
+                solver(i+1, size, nums, ans, result);
+                ans.pop_back();
+            }
+        }
+    }
+    
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<int> ans;
+        vector<vector<int>> result;
+        int i = 0;
+        
+        if(nums.size() != 0){
+            result.push_back(ans);
+        }
+        
+        for(i = 1; i <= nums.size(); i++){
+            solver(0, i, nums, ans, result);
+            ans.clear();
+        }
+        
+        return result;
+        
+    }
+};

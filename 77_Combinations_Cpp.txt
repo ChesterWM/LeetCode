@@ -1,0 +1,26 @@
+class Solution {
+public:
+    void solver(int index, int n, int k, vector<int> &ans, vector<vector<int>> &result){
+        int i = 0;
+        
+        if(ans.size() == k){
+            result.push_back(ans);
+            return;
+        }
+        
+        for(i = index; i <= n; i++){
+            ans.push_back(i);
+            solver(i+1, n, k, ans, result);
+            ans.pop_back();
+        }
+    }
+    
+    vector<vector<int>> combine(int n, int k) {
+        vector<int> ans;
+        vector<vector<int>> result;
+        
+        solver(1, n, k, ans, result);
+        
+        return result;
+    }
+};
