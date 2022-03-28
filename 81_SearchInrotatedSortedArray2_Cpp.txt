@@ -1,0 +1,31 @@
+class Solution {
+public:
+    bool binarySearch(int l, int r, int target, vector<int> &nums){
+        int mid = 0;
+        
+        while(l <= r){
+            mid = (l+r)/2;
+            if(nums[mid] == target){
+                return true;
+            } else if(nums[mid] > target){
+                r = mid-1;
+            } else {
+                l = mid+1;
+            }
+        }
+        return false;
+    }
+    
+    bool search(vector<int>& nums, int target) {
+        int i = 0, pivot = 0;
+        
+        for(i = 0; i < nums.size()-1; i++){
+            if(nums[i] > nums[i+1]){
+                pivot = i;
+                break;
+            }
+        }
+        
+        return (binarySearch(0, pivot, target, nums)) || (binarySearch(pivot+1, nums.size()-1, target, nums));
+    }
+};
