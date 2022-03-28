@@ -1,0 +1,65 @@
+class Solution {
+public:
+    bool isValid(int m, int n, vector<vector<char>> &board){
+        return (m >= 0 && m < board.size() && n >= 0 && n < board[0].size() && board[m][n] != '*');
+    }
+    
+    bool solver(int m, int n, string &target, string &str, vector<vector<char>> &board){
+        int i = 0, adj_m = 0, adj_n = 0;
+        int dm[4] = {-1, 1, 0, 0};
+        int dn[4] = {0, 0, -1, 1};
+        
+        if(str.length() == target.length()){
+            if(str == target){
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+        //try the 4 adjacent cells, in the following order: up -> down -> left -> right!
+        for(i = 0; i < 4; i++){
+            //update the m and n value
+            adj_m = m + dm[i];
+            adj_n = n + dn[i];
+            
+            //check if the adjacent m/n is in the board OR the corresponding character is not used up!
+            if(isValid(adj_m, adj_n, board)){
+                char temp = board[adj_m][adj_n];
+                str += temp;
+                board[adj_m][adj_n] = '*';
+                if(solver(adj_m, adj_n, target, str, board)){
+                    return true;
+                }
+                board[adj_m][adj_n] = temp;
+                str.pop_back();
+            }
+        }
+        return false;
+    }
+    
+    bool exist(vector<vector<char>>& board, string word) {
+        int m = 0, n = 0, i = 0, j = 0;
+        string str = "";
+        
+        m = board.size();
+        n = board[0].size();
+        
+        for(i = 0; i < m; i++){
+            for(j = 0; j < n; j++){
+                //Search the starting character in word
+                if(board[i][j] == word[0]){
+                    str += board[i][j];
+                    board[i][j] = '*';
+                    if(solver(i, j, word, str, board)){
+                        return true;
+                    }
+                    board[i][j] = word[0];
+                    str = "";
+                }
+            }
+        }
+        
+        return false;
+    }
+};
