@@ -1,0 +1,81 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        ListNode* current = nullptr;
+        ListNode* next = nullptr;
+        ListNode* ans = nullptr;
+        ListNode* validEnd = nullptr;
+        int value = 101;
+        
+        if(head && head->next){
+            current = head;
+            next = head->next;
+        } else {
+            return head;
+        }
+        
+        while(current && next){
+            if(current->val == next->val){
+                
+                //update the current and next
+                current = next;
+                if(current->next){
+                    next = current->next;
+                } else {
+                    next = nullptr;
+                    //Already the last node
+                    if(validEnd){
+                        validEnd->next = nullptr;
+                    }
+                }
+                
+                //Update the value
+                value = current->val;
+                
+            } else {
+                //Check if the current->val equal to the checking value
+                if(current->val != value){
+                    //keep the current node
+                    if(ans == nullptr){
+                        ans = current;
+                        validEnd = ans;
+                    } else {
+                        validEnd->next = current;
+                        validEnd = validEnd->next;
+                    }
+                }
+                
+                value = 101;
+                
+                //update current and next
+                current = next;
+                if(current->next){
+                    next = current->next;
+                } else {
+                    next = nullptr;
+                    //Already the end of the list, and the next node is different to the previous node
+                    if(ans == nullptr){
+                        ans = current;
+                        validEnd = ans;
+                    } else {
+                        validEnd->next = current;
+                        validEnd = validEnd->next;
+                    }
+                }
+                
+            }
+        }
+        
+        return ans;
+    }
+};
