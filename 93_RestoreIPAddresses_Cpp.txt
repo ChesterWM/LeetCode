@@ -1,0 +1,54 @@
+class Solution {
+public:
+    void restore(int index, string &s, int size, int dots, string &ans, vector<string> &result){
+        int i = 0;
+        string str_num = "";
+        string temp = "";
+        
+        if(index == size){
+            ans.pop_back();
+            if(dots == 4){
+                result.push_back(ans);
+            }
+            return;
+        }
+        
+        if(dots > 3){
+            return;
+        }
+        
+        temp = ans;
+        if(s[index] == '0'){
+            ans += s[index];
+            ans += '.';
+            restore(index+1, s, size, dots+1, ans, result);
+            ans = temp;
+            return;
+        }
+        
+        
+        for(i = index; (i < size) && (i < index + 3); i++){
+            str_num += s[i];
+            if(stoi(str_num) > 255){
+                return;
+            }
+            
+            ans += str_num;
+            ans += '.';
+            restore(i+1, s, size, dots+1, ans, result);
+            ans = temp;
+        }
+    }
+    
+    vector<string> restoreIpAddresses(string s) {
+        int size = 0;
+        vector<string> result;
+        string ans = "";
+        
+        size = s.length();
+        
+        restore(0, s, size, 0, ans, result);
+        
+        return result;
+    }
+};
