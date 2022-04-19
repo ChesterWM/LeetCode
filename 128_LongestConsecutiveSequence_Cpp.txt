@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int longestConsecutive(vector<int>& nums) {
+        int longest = 0, count = 0;
+        
+        if(!nums.size()){
+            return 0;
+        }
+        
+        set<int> numSet(nums.begin(), nums.end());
+        
+        for(auto it = numSet.begin(); it != numSet.end(); it++){
+            if(next(it) != numSet.end() && *(next(it)) - *(it) == 1){
+                count++;
+                longest = max(longest, count);
+            } else {
+                count = 0;
+            }
+        }
+        
+        return longest + 1;
+    }
+};
