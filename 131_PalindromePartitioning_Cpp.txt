@@ -1,0 +1,37 @@
+class Solution {
+public:
+    bool isPalindrome(string &s, int start, int end){
+        while(start < end){
+            if(s[start] != s[end]){
+                return false;
+            } else {
+                start++;
+                end--;
+            }
+        }
+        return true;
+    }
+    
+    void solver(string &s, int index, vector<string> &ans, vector<vector<string>> &result){
+        if(index == s.length()){
+            result.push_back(ans);
+            return;
+        }
+        
+        for(int i = index; i < s.length(); i++){
+            if(isPalindrome(s, index, i)){
+                ans.push_back(s.substr(index, i-index+1));
+                solver(s, i+1, ans, result);
+                ans.pop_back();
+            }
+        }
+    }
+    
+    vector<vector<string>> partition(string s) {
+        vector<vector<string>> result;
+        vector<string> ans;
+        
+        solver(s, 0, ans, result);
+        return result;
+    }
+};

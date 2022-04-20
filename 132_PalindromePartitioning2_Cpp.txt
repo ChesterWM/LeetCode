@@ -1,0 +1,47 @@
+class Solution {
+public:
+    bool isPalindrome(string &s, int start, int end){
+        while(start < end){
+            if(s[start] != s[end]){
+                return false;
+            } else {
+                start++;
+                end--;
+            }
+        }
+        return true;
+    }
+    
+    int solver(string &s, int start, int end, vector<vector<int>> &dp){
+        if(start >=  end){
+            return 0;
+        }
+        
+        if(dp[start][end] != -1){
+            return dp[start][end];
+        }
+        
+        if(isPalindrome(s, start, end)){
+            return 0;
+        }
+        
+        int ans = INT_MAX;
+        
+        for(int i = start; i < end; i++){
+            if(isPalindrome(s, start, i)){
+                int temp = 1 + solver(s, i+1, end, dp); //Cut!
+                ans = min(temp, ans);
+            }
+        }
+        
+        dp[start][end] = ans;
+        return dp[start][end];
+    }
+    
+    int minCut(string s) {
+        int n = s.length();
+        vector<vector<int>> dp(n, vector<int>(n, -1));
+        
+        return solver(s, 0, s.length()-1, dp);
+    }
+};
