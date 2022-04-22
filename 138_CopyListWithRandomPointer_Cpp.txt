@@ -1,0 +1,86 @@
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* next;
+    Node* random;
+    
+    Node(int _val) {
+        val = _val;
+        next = NULL;
+        random = NULL;
+    }
+};
+*/
+
+class Solution {
+public:
+    int findMapIndex(Node *node, map<int, Node *> &mapping){
+        if(!node){
+            return -1;
+        }
+        
+        for(auto x : mapping){
+            if(x.second == node){
+                return x.first;
+            }
+        }
+        
+        return -1;
+    }
+    
+    Node* copyRandomList(Node* head) {
+        Node *current = nullptr;
+        Node *newCurrent = nullptr;
+        Node *newHead = nullptr;
+        
+        map<int, Node *> mapHead;
+        map<int, Node *> mapNewHead;
+        int pos = 0;
+        
+        if(!head){
+            return nullptr;
+        }
+        
+        current = head;
+        newCurrent = new Node(current->val);
+        newHead = newCurrent;
+        
+        //update the map
+        mapHead[pos] = current;
+        mapNewHead[pos] = newCurrent;
+        pos++;
+        
+        current = current->next;
+        while(current){
+            newCurrent->next = new Node(current->val);
+            
+            //update the map
+            mapHead[pos] = current;
+            mapNewHead[pos] = newCurrent->next;
+            pos++;
+            
+            //update current and newCurrent
+            current = current->next;
+            newCurrent = newCurrent->next;
+        }
+        
+        //Swipe again head and newHead to assign the random pointer
+        current = head;
+        newCurrent = newHead;
+        
+        while(current){
+            int index = findMapIndex(current->random, mapHead);
+            if(index != -1){
+                newCurrent->random = mapNewHead[index];
+            }
+            
+            //update the current and newCurrent;
+            current = current->next;
+            newCurrent = newCurrent->next;
+        }
+        
+        return newHead;
+    }
+};
