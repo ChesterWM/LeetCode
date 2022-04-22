@@ -1,0 +1,68 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* insertionSortList(ListNode* head) {
+        ListNode *current = nullptr;
+        ListNode *insertCurrent = nullptr;
+        ListNode *previous = nullptr;
+        ListNode *insertPrevious = nullptr;
+        ListNode *removeNode = nullptr;
+        bool needInsert = false;
+        
+        current = head;
+        while(current){
+            if(current != head){
+                if(current->val < previous->val){
+                    needInsert = true;
+                    //remove the current node from linkedlist
+                    if(current->next){
+                        previous->next = current->next;
+                    } else {
+                        previous->next = nullptr;
+                    }
+                    //Get the current node
+                    removeNode = current;
+                }
+            }
+
+            if(needInsert){
+                needInsert = false;
+                
+                //Do the insertion here
+                insertCurrent = head;
+                while(insertCurrent != nullptr){
+                    if(removeNode->val < insertCurrent->val){
+                        if(insertCurrent == head){
+                            removeNode->next = head;
+                            head = removeNode;
+                        } else {
+                            removeNode->next = insertCurrent;
+                            insertPrevious->next = removeNode;
+                        }
+                        break;
+                    } else {
+                        insertPrevious = insertCurrent;
+                        insertCurrent = insertCurrent->next;
+                    }
+                }
+                
+                //update the current and previous
+                current = previous->next;
+            } else {
+                //update the current and previous
+                previous = current;
+                current = current->next;
+            }
+        }
+        return head;
+    }
+};
