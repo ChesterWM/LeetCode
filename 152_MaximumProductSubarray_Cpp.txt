@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int maximum = 1, minimum = 1, result = INT_MIN;
+        
+        for(int i = 0; i < nums.size(); i++){
+            if(nums[i] == 0){
+                //Discontinue, set the max and min as 1
+                maximum = 1;
+                minimum = 1;
+                result = max(result, 0);
+            } else {
+                int curr_max = maximum * nums[i];
+                int curr_min = minimum * nums[i];
+                
+                //cater for the case if the current product is a negative number!
+                maximum = max(max(curr_max, curr_min), nums[i]);
+                minimum = min(min(curr_max, curr_min), nums[i]);
+                
+                result = max(maximum, result);
+            }
+        }
+        return result;
+    }
+};
