@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int rangeBitwiseAnd(int left, int right) {
+        long long int i = 0, result = 0;
+        
+        result = left;
+        for(i = left; i <= right; i++){
+            result &= i;
+            if(!result){
+                return 0;
+            }
+        }
+        
+        return result;
+    }
+};
