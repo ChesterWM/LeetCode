@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int computeArea(int ax1, int ay1, int ax2, int ay2, int bx1, int by1, int bx2, int by2) {
+        int areaA = 0, areaB = 0, overlapArea = 0;
+        int cx1, cy1, cx2, cy2;
+        
+        //Calculation the Area A and B
+        areaA = abs((ay2-ay1) * (ax2-ax1));
+        areaB = abs((by2-by1) * (bx2-bx1));
+        
+        //Check if there is overlap area
+        if(ax1>= bx2 || bx1 >= ax2 || ay1 >= by2 || by1 >= ay2){
+            //No overlap area
+            overlapArea = 0;
+        } else {
+            //Consider the overlapped area
+            cx1 = max(ax1, bx1);
+            cy1 = max(ay1, by1);
+            cx2 = min(ax2, bx2);
+            cy2 = min(ay2, by2);
+            overlapArea = abs((cy2-cy1) * (cx2-cx1));
+        }
+        return areaA + areaB - overlapArea;
+    }
+};
