@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int minSubArrayLen(int target, vector<int>& nums) {
+        int startIndex = 0;
+        int accumulation = 0;
+        int count = nums.size() + 1;
+        
+        for(int i = 0; i < nums.size(); i++){
+            accumulation += nums[i];
+            while(accumulation >= target){
+                count = min(count, i - startIndex + 1);
+                accumulation -= nums[startIndex];
+                startIndex++;
+            }
+        }
+        
+        return (count == nums.size() + 1)? 0 : count;
+    }
+};
