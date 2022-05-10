@@ -1,0 +1,18 @@
+class Solution {
+public:
+    bool isUgly(int n) {
+        vector<int> factors = {2,3,5};
+        
+        if(n <= 0){
+            return false;
+        }
+        
+        for(auto f : factors){
+            while(n % f == 0){
+                n /= f;
+            }
+        }
+        
+        return (n == 1);
+    }
+};

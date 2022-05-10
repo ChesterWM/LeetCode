@@ -1,0 +1,47 @@
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        vector<int> validRow, validCol;
+        int validEndRow, validStartRow, validEndCol, validStartCol;
+        
+        if(target < matrix[0][0]){
+            return false;
+        }
+        
+        for(int i = 0; i < matrix.size(); i++){
+            if(matrix[i][0] <= target && target <= matrix[i][matrix[i].size()-1]){
+                validRow.push_back(i);
+            }
+        }
+        
+        if(!validRow.empty()){
+            validStartRow = validRow[0];
+            validEndRow = validRow[validRow.size()-1];
+        } else {
+            return false;
+        }
+        
+        for(int i = 0; i < matrix[0].size(); i++){
+            if(matrix[validStartRow][i] <= target && target <= matrix[validEndRow][i]){
+                validCol.push_back(i);
+            }
+        }
+        
+        if(!validCol.empty()){
+            validStartCol = validCol[0];
+            validEndCol = validCol[validCol.size()-1];
+        } else {
+            return false;
+        }
+        
+        for(int i = validStartRow; i <= validEndRow; i++){
+            for(int j = validStartCol; j <= validEndCol; j++){
+                if(matrix[i][j] == target){
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+};
