@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int nthUglyNumber(int n) {
+        int count = 1;
+        int two = 0, three = 0, five = 0;
+        vector<int> uglynumbers;
+        
+        uglynumbers.push_back(1);
+        while(count < n){
+            int next2 = uglynumbers[two] * 2;
+            int next3 = uglynumbers[three] * 3;
+            int next5 = uglynumbers[five] * 5;
+            
+            int next_min = min(next2, min(next3, next5));
+            uglynumbers.push_back(next_min);
+            count++;
+
+            if(next_min == next2){
+                two++;
+            }
+            if(next_min == next3){
+                three++;
+            }
+            if(next_min == next5){
+                five++;
+            }
+        }
+        return uglynumbers[n-1];
+    }
+};
