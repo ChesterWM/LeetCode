@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int hIndex(vector<int>& citations) {
+        int n = citations.size();
+        int left = 0, right = n-1;
+        int mid;
+        
+        while(left <= right){
+            mid = (left + right) / 2;
+            //Check the h-index(n-mid) at citations[mid]
+            if(n-mid > citations[mid]){
+                //h-index(n-mid) is not valid at citations[mid]
+                //A smaller h-index(n-mid) should check
+                //smaller n-mid, ie, larger mid
+                left = mid + 1;
+            } else {
+                //Valid h-index!
+                //But this may not be the maximum h index, try a larger h-index, ie, smaller mid
+                //vice versa, smaller mid
+                right = mid - 1;
+            }
+        }
+        
+        //Return a max h-index, ie, n-left
+        return n-left;
+    }
+};
