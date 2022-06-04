@@ -1,0 +1,22 @@
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+        queue<char> q;
+        
+        for(auto ch : s){
+            q.push(ch);
+        }
+        
+        for(auto ch : t){
+            if(ch == q.front()){
+                q.pop();
+            }
+        }
+        
+        if(q.empty()){
+            return true;
+        } else {
+            return false;
+        }
+    }
+};
