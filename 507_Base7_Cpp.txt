@@ -1,0 +1,25 @@
+class Solution {
+public:
+    string convertToBase7(int num) {
+        string sign = "";
+        string ans = "";
+        int remainder = 0;
+        
+        if(num < 0){
+            sign = "-";
+            num *= -1;
+        } else if(num == 0){
+            return "0";
+        }
+        
+        while(num != 0){
+            remainder = num % 7;
+            num /= 7;
+            ans += (remainder + 0x30);
+        }
+        ans += sign;
+        
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};

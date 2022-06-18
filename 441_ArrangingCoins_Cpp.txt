@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int arrangeCoins(int n) {
+        int rowSize = 1;
+        int numRow = 0;
+        
+        while(n >= rowSize){
+            n -= rowSize;
+            rowSize++;
+            numRow++;
+        }
+        
+        return numRow;
+    }
+};

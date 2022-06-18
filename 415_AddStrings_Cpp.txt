@@ -1,0 +1,26 @@
+class Solution {
+public:
+    string addStrings(string num1, string num2) {
+        int num1Idx = 0, num2Idx = 0, carry = 0;
+        string result = "";
+        
+        num1Idx = num1.size()-1;
+        num2Idx = num2.size()-1;
+        
+        while(num1Idx >= 0 || num2Idx >= 0 || carry > 0){
+            if(num1Idx >= 0){
+                carry += num1[num1Idx] - 0x30;
+                num1Idx--;
+            }
+            if(num2Idx >= 0){
+                carry += num2[num2Idx] - 0x30;
+                num2Idx--;
+            }
+            result += (carry % 10) + 0x30;
+            carry /= 10;
+        }
+        
+        reverse(result.begin(), result.end());
+        return result;
+    }
+};
