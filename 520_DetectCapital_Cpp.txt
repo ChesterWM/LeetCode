@@ -1,0 +1,23 @@
+class Solution {
+public:
+    bool detectCapitalUse(string word) {
+        bool isCapital = true;
+        
+        for(int i = 0; i < word.length(); i++){
+            if(word[i] >= 0x41 && word[i] <= 0x5A){
+                //Capital letter
+                if(i > 0 && isCapital == false){
+                    return false;
+                }
+            } else {
+                //not capital
+                if(i > 1 && isCapital){
+                    return false;
+                }
+                isCapital = false;
+            }
+        }
+        
+        return true;
+    }
+};

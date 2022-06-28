@@ -1,0 +1,24 @@
+class Solution {
+public:
+    string reverseStr(string s, int k) {
+        bool need_reverse = true;
+        int pos = 0;
+        
+        while(pos + k <= s.size()){
+            if(need_reverse){
+                need_reverse = false;
+                reverse(s.begin() + pos, s.begin() + pos + k);
+            } else {
+                need_reverse = true;
+            }
+            pos += k;
+        }
+        
+        if(need_reverse){
+            //reverse the remaining characters
+            reverse(s.begin() + pos, s.end());
+        }
+        
+        return s;
+    }
+};
