@@ -1,0 +1,35 @@
+class Solution {
+/*
+        example- 
+        12!              = 12x11x10x9x8x7x6x5x4x3x2x1
+        number of 5s-    =        1         1        
+        30!              = 30x...25x...20x...15x...10x...5x...
+        number of 5s-    =  1     2     1     1     1    1
+        
+        now we can generalise it that after every 5 spacing there is an occurence of 5 and also after every 25 spacing there is an occurence of extra 5 amd also after every 125 spacing there will be an extra 5 occuring and so on.....
+        so lets generalise it in the form =
+        number of 5s = n/5 + n/25 + n/125 + n/625 + ........
+        so int i = 5;
+        inside a while loop
+        ans = ans + n/i
+        i = i * 5
+        
+        */
+
+public:
+    int trailingZeroes(int n) {
+        int i = 5;
+        int ans = 0;
+        
+        if(n == 0){
+            return 0;
+        }
+        
+        while(i <= n){
+            ans += n / i;
+            i *= 5;
+        }
+        
+        return ans;
+    }
+};

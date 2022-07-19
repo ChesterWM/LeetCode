@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int distributeCandies(vector<int>& candyType) {
+        map<int, int> m;
+        int n = candyType.size() / 2;
+        
+        for(auto candy : candyType){
+            m[candy]++;
+        }
+        
+        return (n < m.size())? n : m.size();
+    }
+};
