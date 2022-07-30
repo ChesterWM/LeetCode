@@ -1,0 +1,51 @@
+//Topological Sort
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<int> adj[numCourses];
+        vector<int> pre_courses(numCourses, 0);
+        queue<int> q;
+        int visited = 0;
+        
+        for(int i = 0; i < prerequisites.size(); i++){
+            int u = prerequisites[i][0];
+            int v = prerequisites[i][1];
+            
+            adj[v].push_back(u);
+        }
+        
+        //So the adj[] store all the courses that do have prerequisites!
+        for(int i = 0; i < numCourses; i++){
+            for(auto course : adj[i]){
+                pre_courses[course]++;
+            }
+        }
+        
+        for(int i = 0; i < numCourses; i++){
+            if(pre_courses[i] == 0){
+                //if it is not a pre-requisite course, process it first!
+                q.push(i);
+            }
+        }
+        
+        while(!q.empty()){
+            int value = q.front();
+            q.pop();
+            visited++;  //count the course to be taken!
+            
+            //check if the current course is the prerequisite of any other courses!
+            for(auto course : adj[value]){
+                pre_courses[course]--;
+                if(pre_courses[course] == 0){
+                    q.push(course);
+                }
+            }
+        }
+        
+        if(visited == numCourses){  //must be '==', cant be '<='
+            return true;
+        } else {
+            return false;
+        }
+    }
+};

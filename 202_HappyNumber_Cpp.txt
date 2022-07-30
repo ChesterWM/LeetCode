@@ -1,0 +1,27 @@
+class Solution {
+public:
+    bool isHappy(int n) {
+        set<int> pool;
+        int i = 0, val = 0;
+        
+        while(1){
+            while(n){
+                i = n % 10;
+                val += i * i;
+                n /= 10;
+            }
+            
+            if(val == 1){
+                return true;
+            } else if(pool.find(val) != pool.end()){
+                return false;
+            }
+            pool.insert(val);
+            n = val;
+            val = 0;
+        }
+        
+        //should be return in all the above cases, unexpected result if program reach this line!
+        return false;
+    }
+};

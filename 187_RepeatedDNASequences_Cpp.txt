@@ -1,0 +1,52 @@
+class Solution {
+public:
+    vector<string> findRepeatedDnaSequences(string s) {
+        unordered_map<string, int> m;
+        vector<string> ans;
+        int str_size = s.size();
+        string dna_str;
+        
+        for(int i = 0; i <= str_size-10; i++){
+            dna_str = s.substr(i, 10);
+            m[dna_str]++;
+            if(m[dna_str] == 2){
+                ans.push_back(dna_str);
+            }
+        }
+        
+        return ans;
+    }
+};
+
+
+//Slow solution
+class Solution {
+public:
+    vector<string> findRepeatedDnaSequences(string s) {
+        map<string, int> m;
+        string dna_str = "";
+        int start = 0, end = 0;
+        vector<string> ans;
+        
+        while(end <= s.size()){
+            if(end-start < 10){
+                if(end < s.size()){
+                    dna_str += s[end];
+                }
+                end++;
+            } else {
+                m[dna_str]++;
+                dna_str = dna_str.substr(1);
+                start++;
+            }
+        }
+        
+        for(auto n : m){
+            if(n.second > 1){
+                ans.push_back(n.first);
+            }
+        }
+        
+        return ans;
+    }
+};
