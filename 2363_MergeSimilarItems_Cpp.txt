@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<vector<int>> mergeSimilarItems(vector<vector<int>>& items1, vector<vector<int>>& items2) {
+        vector<vector<int>> result;
+        vector<int> temp{0, 0};
+        map<int, int> items;
+        
+        int m = items1.size(), n = items2.size();
+        int totalsize = max(m, n);
+        
+        for(int i = 0; i < totalsize; i++){
+            if(i < m){
+                items[items1[i][0]] += items1[i][1];
+            }
+            if(i < n){
+                items[items2[i][0]] += items2[i][1];
+            }
+        }
+        
+        for(auto e : items){
+            if(e.second){
+                temp[0] = e.first;
+                temp[1] = e.second;
+            }
+            
+            result.push_back(temp);
+        }
+        
+        return result;
+    }
+};

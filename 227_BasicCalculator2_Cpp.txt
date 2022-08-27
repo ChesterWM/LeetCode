@@ -1,0 +1,63 @@
+class Solution {
+public:
+    int calculate(string s) {
+        stack<int>  num;
+        int value = 0;
+        char previous_op = '+';
+        
+        for(int i = 0; i < s.length(); i++){
+            if(s[i] == '+' || s[i] == '-' || s[i] == '*' || s[i] == '/'){
+                switch(previous_op){
+                    case '+':
+                        break;
+                    case '-':
+                        value *= -1;
+                        break;
+                    case '*':
+                        value = num.top() * value;
+                        num.pop();
+                        break;
+                    case '/':
+                        value = num.top() / value;
+                        num.pop();
+                        break;
+                }
+                previous_op = s[i];
+                num.push(value);
+                value = 0;
+            } else if(s[i] == ' '){
+                //do nothing
+            } else {
+                value = value * 10 + (s[i] - 0x30);
+            }
+        }
+        
+        //cater for the last number
+        switch(previous_op){
+            case '+':
+                break;
+            case '-':
+                value *= -1;
+                break;
+            case '*':
+                value = num.top() * value;
+                num.pop();
+                break;
+            case '/':
+                value = num.top() / value;
+                num.pop();
+                break;
+        }
+        num.push(value);
+        
+        value = 0;
+        //Sum up all the numbers in stack
+        while(!num.empty()){
+            value += num.top();
+            num.pop();
+        }
+        
+        return value;
+        
+    }
+};
