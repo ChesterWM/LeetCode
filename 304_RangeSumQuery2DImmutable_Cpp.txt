@@ -28,12 +28,15 @@ public:
         sum = dp[row2][col2];
         
         if(row1){
+		//minu sum of unnecessary row
             sum -= dp[row1 - 1][col2];
         }
         if(col1){
+		//minu sum of unnecessary col
             sum -= dp[row2][col1 - 1];
         }
         if(row1 && col1){
+		//Add back the overlap part when doing mimu operation
             sum += dp[row1 - 1][col1 - 1];
         }
         return sum;
