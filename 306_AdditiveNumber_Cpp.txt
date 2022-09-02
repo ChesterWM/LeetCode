@@ -1,0 +1,43 @@
+class Solution {
+public:  
+    bool isAdditiveNumber(string num) {
+        int size = num.size();
+        
+        if(num.length() < 3){
+            return false;
+        }
+        
+        for(int i = 1; i < size; i++){
+            string s1 = num.substr(0, i);
+            if(s1.size() > 1 && s1[0] == '0'){
+                break;
+            }
+            for(int j = i+1; j < size; j++){
+                string s2 = num.substr(i, j - i);
+                if(s2.size() > 1 && s2[0] == '0'){
+                    break;
+                }
+                
+                long int num1 = stol(s1);
+                long int num2 = stol(s2);
+                
+                int pos = j;
+                while(pos < size){
+                    long int next = num1 + num2;
+                    string nextstr = to_string(next);
+                    if(nextstr != num.substr(pos, nextstr.size())){
+                        break;
+                    }
+                    pos += nextstr.size();
+                    num1 = num2;
+                    num2 = next;
+                }
+                if(pos >= size){
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+};
