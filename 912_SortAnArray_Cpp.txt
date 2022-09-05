@@ -136,3 +136,42 @@ public:
         return nums;
     }
 };
+
+//quicksort
+class Solution {
+public:
+    int partition(vector<int> &nums, int l, int r){
+        int i = l - 1;
+        int pivot = nums[r];
+        
+        for(int j = l; j <= r-1; j++){
+            if(nums[j] < pivot){
+                i++;
+                swap(nums[j], nums[i]);
+            }
+        }
+        swap(nums[i+1], nums[r]);
+        return i+1;
+    }
+    
+    void quickSort(vector<int> &nums, int l, int r){
+        int pivot = 0;
+        
+        if(l < r){
+            pivot = partition(nums, l, r);
+            
+            quickSort(nums, l, pivot-1);
+            quickSort(nums, pivot+1, r);
+        }
+    }
+    
+    vector<int> sortArray(vector<int>& nums) {
+        int size = nums.size();
+        int l = 0, r = size - 1;
+        
+        //Merge sort
+        quickSort(nums, l, r);
+        
+        return nums;
+    }
+};
