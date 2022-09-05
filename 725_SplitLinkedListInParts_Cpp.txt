@@ -1,0 +1,72 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    void calculatePartSize(vector<int> &partSize, int length, int k){
+        if(length <= k){
+            for(int i = 0; i < length; i++){
+                partSize[i]++;
+            }
+        } else {
+            for(int i = 0; i < k; i++){
+                partSize[i] += (length / k);
+            }
+        }
+    }
+    
+    vector<ListNode*> splitListToParts(ListNode* head, int k) {
+        ListNode *current = nullptr;
+        ListNode *newStart = nullptr;
+        int length = 0, splitSize = 0, earlierSize = 0;
+        vector<ListNode *> result;
+        vector<int> partSize(k, 0);
+        
+        //Get the length of linkedlist
+        current = head;
+        while(current){
+            length++;
+            current = current->next;
+        }
+        
+        while(length){
+            calculatePartSize(partSize, length, k);
+            if(length <= k){
+                break;
+            } else {
+                length %= k;
+            }
+        }
+        
+        length = 0;
+        current = head;
+        while(current){
+            length++;
+            if(length == partSize[result.size()]){
+                length = 0;
+                //Current node is the end of the part
+                newStart = current->next;
+                current->next = nullptr;
+                result.push_back(head);
+                head = newStart;
+                current = newStart;
+            } else {
+                current = current->next;
+            }
+        }
+        
+        //Check result size
+        while(result.size() < k){
+            result.push_back(nullptr);
+        }
+        
+        return result;
+    }
+};
