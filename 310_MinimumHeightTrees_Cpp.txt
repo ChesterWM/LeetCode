@@ -1,0 +1,47 @@
+class Solution {
+public:
+    vector<int> findMinHeightTrees(int n, vector<vector<int>>& edges) {
+        vector<int> result;
+        //vector<int> adjNode[n];
+        vector<vector<int>> adjNode(n);
+        vector<int> vertix(n, 0);
+        queue<int> q;
+        
+        if(n == 1){
+            result.push_back(0);
+            return result;
+        }
+        
+        for(int i = 0; i < edges.size(); i++){
+            //Memorize all the adj node
+            adjNode[edges[i][0]].push_back(edges[i][1]);
+            adjNode[edges[i][1]].push_back(edges[i][0]);
+            //Sum all the vertix;
+            vertix[edges[i][0]]++;
+            vertix[edges[i][1]]++;
+        }
+        
+        for(int i = 0; i < vertix.size(); i++){
+            if(vertix[i] == 1){
+                q.push(i);
+            }
+        }
+        while(!q.empty()){
+            int size = q.size();
+            result.clear();
+            for(int i = 0; i < size; i++){
+                int current = q.front();
+                q.pop();
+                result.push_back(current);
+                for(auto v : adjNode[current]){
+                    vertix[v]--;
+                    if(vertix[v] == 1){
+                        q.push(v);
+                    }
+                }
+            }
+        }
+        
+        return result;
+    }
+};
