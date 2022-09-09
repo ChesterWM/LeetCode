@@ -1,0 +1,53 @@
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* prev;
+    Node* next;
+    Node* child;
+};
+*/
+
+class Solution {
+public:
+    //Return the end of the node, ie, tailNode
+    Node* flattenHelper(Node *node){
+        Node* current = nullptr;
+        Node* previous = nullptr;
+        
+        if(!node){
+            return node;
+        }
+        
+        current = node;
+        while(current){
+            if(current->child){
+                //save the current->next for later process
+                Node *tempNext = current->next;
+                
+                //Make the current->child node as current->next node
+                current->child->prev = current;
+                current->next = current->child;
+                
+                //Get the tailNode of current->next node, ie, originally current->child node
+                Node *tailNode = flattenHelper(current->next);
+                
+                tailNode->next = tempNext;
+                if(tempNext){
+                    tempNext->prev = tailNode;
+                }
+                current->child = nullptr;
+                current = tailNode;
+            }
+            previous = current;
+            current = current->next;
+        }
+        return previous;
+    }
+    
+    Node* flatten(Node* head) {
+        flattenHelper(head);
+        return head;
+    }
+};
