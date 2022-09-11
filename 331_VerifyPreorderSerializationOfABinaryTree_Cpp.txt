@@ -1,0 +1,34 @@
+class Solution {
+public:
+    bool isValidSerialization(string preorder) {
+        int vacancy = 1;
+        int i = 0;
+        
+        while(i < preorder.size()){
+            if(preorder[i] == ','){
+                i++;
+                continue;
+            } else {
+                vacancy--;
+                if(vacancy < 0){
+                    return false;
+                }
+                
+                while(preorder[i] != ',' && preorder[i] >= '0' && preorder[i] <= '9' && i < preorder.size()){
+                    //Skip the index if the it is a number
+                    i++;
+                }
+                if(preorder[i] == '#'){
+                    i++;
+                } else {
+                    vacancy += 2;
+                }
+            }
+        }
+        
+        if(vacancy){
+            return false;
+        }
+        return true;
+    }
+};
