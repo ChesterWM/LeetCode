@@ -1,0 +1,55 @@
+class Solution {
+public:
+    int maxProduct(vector<string>& words) {
+        int size = words.size();
+        int i = 0, j = 0, k = 0;
+        vector<vector<int>> wordsMap(size, vector<int>(26, 0));
+        int maxProduct = 0;
+        bool overlapped = false;
+        
+        //Prepare the words mapping
+        for(i = 0; i < size; i++){
+            for(j = 0; j < words[i].length(); j++){
+                wordsMap[i][words[i][j] - 'a']++;
+            }
+        }
+               
+        for(i = 0; i < size-1; i++){
+            for(j = i+1; j < size; j++){
+                overlapped = false;
+                for(k = 0; k < 26; k++){
+                    if(wordsMap[i][k] > 0 && wordsMap[j][k] > 0){
+                        //2 words share common letters
+                        overlapped = true;
+                        break;
+                    }
+                }
+                if(!overlapped){
+                    maxProduct = max(maxProduct, (int)words[i].length() * (int)words[j].length());
+                }
+            }
+        }
+        return maxProduct;
+    }
+};
+
+//Own version, exceed time limit
+class Solution {
+public:
+    int maxProduct(vector<string>& words) {
+        int size = words.size();
+        int maxProduct = 0;
+        string compStr;
+        
+        for(int i = 0; i < size-1; i++){
+            compStr = words[i];
+            for(int j = i+1; j < size; j++){
+                if(words[j].find_first_of(compStr) == std::string::npos){
+                    //2 words do not share common letters
+                    maxProduct = max(maxProduct, (int)words[i].length() * (int)words[j].length());
+                }
+            }
+        }
+        return maxProduct;
+    }
+};
