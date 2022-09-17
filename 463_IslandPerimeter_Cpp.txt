@@ -1,0 +1,62 @@
+class Solution {
+public:
+    int gridSideLength(vector<vector<int>> &grid, int row, int col){
+        int rowSize = grid.size();
+        int colSize = grid[0].size();
+        int sizeLength = 0;
+        
+        //up
+        if(row == 0){
+            sizeLength++;
+        } else {
+            if(grid[row-1][col] == 0){
+                sizeLength++;
+            }
+        }
+        
+        //down
+        if(row == rowSize-1){
+            sizeLength++;
+        } else {
+            if(grid[row+1][col] == 0){
+                sizeLength++;
+            }
+        }
+        
+        //left
+        if(col == 0){
+            sizeLength++;
+        } else {
+            if(grid[row][col-1] == 0){
+                sizeLength++;
+            }
+        }
+        
+        //right
+        if(col == colSize-1){
+            sizeLength++;
+        } else {
+            if(grid[row][col+1] == 0){
+                sizeLength++;
+            }
+        }
+        
+        return sizeLength;
+    }
+    
+    int islandPerimeter(vector<vector<int>>& grid) {
+        int rowSize = grid.size();
+        int colSize = grid[0].size();
+        int perimeter = 0;
+        
+        
+        for(int i = 0; i < rowSize; i++){
+            for(int j = 0; j < colSize; j++){
+                if(grid[i][j]){
+                    perimeter += gridSideLength(grid, i, j);
+                }
+            }
+        }
+        return perimeter;
+    }
+};

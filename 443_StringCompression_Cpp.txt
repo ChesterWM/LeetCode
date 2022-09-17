@@ -1,0 +1,49 @@
+class Solution {
+public:
+    void write(vector<char> &chars, char ch, int count, int &wpos){
+        int startpos = 0;
+        
+        if(!count){
+            return;
+        }
+        
+        //Write character
+        chars[wpos] = ch;
+        wpos++;
+        
+        if(count > 1){
+            //Write number of character
+            startpos = wpos;
+            do {
+                int r = count % 10;
+                chars[wpos] = r + 0x30;
+                count /= 10;
+                wpos++;
+            } while(count > 0);
+
+            reverse(chars.begin() + startpos, chars.begin() + wpos);
+        }
+    }
+    
+    int compress(vector<char>& chars) {
+        int rpos = 0, wpos = 0, count = 0;
+        char ch = ' ';
+        
+        while(rpos < chars.size()){
+            if(chars[rpos] != ch){
+                //Not a consecutive character, compress into "char"
+                write(chars, ch, count, wpos);
+                //Update the character
+                ch = chars[rpos];
+                count = 1;
+            } else {
+                count++;
+            }
+            rpos++;
+        }
+        //Cater the case when rpos == chars.size()
+        write(chars, ch, count, wpos);
+        
+        return wpos;
+    }
+};
