@@ -1,0 +1,13 @@
+class Solution {
+public:
+    int bulbSwitch(int n) {
+        int ans = 0, index = 1;
+        
+        while(index * index <= n){
+            index++;
+            ans++;
+        }
+        
+        return ans;
+    }
+};
