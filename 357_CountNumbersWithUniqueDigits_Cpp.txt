@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int countNumbersWithUniqueDigits(int n) {
+        int ans = 10;
+        int current = 9;
+        int start = 9;
+        
+        if(n == 0){
+            return 1;
+        }
+        
+        while(n > 1 && start > 0){
+            current *= start;
+            ans += current;
+            start--;
+            n--;
+        }
+        
+        return ans;
+    }
+};
