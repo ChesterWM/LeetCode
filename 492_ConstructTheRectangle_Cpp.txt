@@ -1,0 +1,19 @@
+class Solution {
+public:
+    vector<int> constructRectangle(int area) {
+        vector<int> ans;
+        int itnum = 0, r = 0;
+        
+        itnum = sqrt(area);
+        for(int i = itnum; i > 0; i--){
+            if(area % i == 0){
+                r = area / i;
+                ans.push_back(r);
+                ans.push_back(i);
+                break;
+            }
+        }
+        
+        return ans;
+    }
+};

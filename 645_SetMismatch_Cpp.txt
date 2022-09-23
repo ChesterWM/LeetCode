@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<int> findErrorNums(vector<int>& nums) {
+        vector<int> ans;
+        map<int, int> mp;
+        int itnum = 1, miss = 0;
+        
+        for(auto n : nums){
+            mp[n]++;
+        }
+        
+        for(auto e : mp){
+            if(e.first != itnum){
+                miss = itnum;
+                itnum++;
+            }
+            
+            if(e.second > 1){
+                ans.push_back(e.first);
+            }
+            itnum++;
+        }
+        
+        if(!miss){
+            miss = nums.size();
+        }
+        ans.push_back(miss);
+        
+        return ans;
+    }
+};
