@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int hardestWorker(int n, vector<vector<int>>& logs) {
+        int unitTime = 0;
+        int previousEnd = 0;
+        int id = 0;
+        
+        for(int i = 0; i < logs.size(); i++){
+            int time = logs[i][1] - previousEnd;
+            if(time > unitTime){
+                unitTime = time;
+                id = logs[i][0];
+            } else if(time == unitTime){
+                if(logs[i][0] < id){
+                    id = logs[i][0];
+                }
+            }
+            previousEnd = logs[i][1];
+        }
+        
+        return id;
+    }
+};

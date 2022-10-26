@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int findMaxK(vector<int>& nums) {
+        int low = 0, high = nums.size()-1;
+        int sum = 0;
+        
+        sort(nums.begin(), nums.end());
+        
+        while(low < high){
+            sum = nums[low] + nums[high];
+            if(sum == 0){
+                return nums[high];
+            } else if(sum < 0){
+                low++;
+            } else {
+                high--;
+            }
+        }
+        return -1;
+    }
+};
